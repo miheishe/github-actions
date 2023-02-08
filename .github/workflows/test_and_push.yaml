@@ -50,3 +50,5 @@ jobs:
       - name: Push image to docker.io
         # Пушим образ в registry
         run: docker push ${{ secrets.DH_LOGIN }}/${{ vars.DH_REPO }}:${GITHUB_REF:11}
+      - name: Run Ansible Playbook (remote conect)
+        run: ansible-playbook -i ./hosts ./dh_remote_login.yml
