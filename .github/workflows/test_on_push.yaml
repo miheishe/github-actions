@@ -26,8 +26,7 @@ jobs:
       - name: Tests report
         run: coverage report
       - name: Create Ansible inventory
-        run: echo $SRVNAME 
-        run: echo $SRVNAME > ./hosts
+        run: echo $SRVNAME && echo $SRVNAME > ./hosts
       - name: Check inventory
         run: ansible-inventory --graph 
       - name: Run Ansible ping
