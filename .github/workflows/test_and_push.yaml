@@ -53,4 +53,4 @@ jobs:
       - name: Create Ansible inventory
         run: echo "${{ vars.SRVNAME }}" > hosts
       - name: Run Ansible Playbook (remote conect)
-        run: ansible-playbook -i ./hosts ./dh_remote_login.yml --extra-vars "ansible_user=${{ secrets.SRVLOGIN }} ansible_password=${{ secrets.SRVPASS }}"
+        run: ansible-playbook -i ./hosts ./dh_remote_login.yml --extra-vars "ansible_user=${{ secrets.SRVLOGIN }} ansible_password=${{ secrets.SRVPASS }} DHL=${{ secrets.DH_LOGIN }} DHP=${{ secrets.DH_PASSWORD }}"
