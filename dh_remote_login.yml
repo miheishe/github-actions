@@ -1,13 +1,10 @@
 ---
 - name: Log in to Docker Hub Registry
   hosts: all
+  gather_facts: no
   tasks:
-    - name: Set access token
-      set_fact:
-        registry_username: "{{ lookup('secrets', 'DH_LOGIN') }}"
-        access_token: "{{ lookup('secrets', 'DH_PASSWORD') }}"
 
     - name: Log in to Docker Hub Registry
       docker_login:
-        username: "{{ registry_username }}"
-        password: "{{ access_token }}"
+        username: "{{ DHL }}"
+        password: "{{ DHP }}"
