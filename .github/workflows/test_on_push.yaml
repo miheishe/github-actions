@@ -26,5 +26,5 @@ jobs:
       - name: Tests report
         run: coverage report
       - name: Install Ansible
-        run: ansible --version
+        run: ansible all --inventory=${{ env.SRVNAME }}, -m ping --extra-vars "ansible_user=${{ secrets.SRVLOGIN }} ansible_password=${{ secrets.SRVPASS }}" 
 
