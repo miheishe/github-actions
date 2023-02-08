@@ -25,4 +25,6 @@ jobs:
         run: coverage run src/tests.py
       - name: Tests report
         run: coverage report
+      - name: Install Ansible
+        run: ansible --version
 
