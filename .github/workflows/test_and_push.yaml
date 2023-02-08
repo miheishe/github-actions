@@ -10,7 +10,7 @@ jobs:
     runs-on: [ubuntu-latest]
     steps:
       # Чекаутим код
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
       # Устанавливаем python нужной версии
       - uses: actions/setup-python@v4.5.0
         with:
@@ -42,7 +42,7 @@ jobs:
         # Сначала мы логинимся в docker.io
         run:  echo ${{ secrets.DOCKER_PWD }} | docker login -u ${{ secrets.DH_LOGIN }} --password-stdin
         # Чекаутим код
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
       - name: Build image
         # Собираем image и называем его так как указано в hub.docker т.е. login/repository:version
         run: docker build -t ${{ secrets.DH_LOGIN }}/${{ vars.DH_REPO }}:${GITHUB_REF:11} -f Dockerfile .
