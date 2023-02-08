@@ -26,9 +26,9 @@ jobs:
       - name: Tests report
         run: coverage report
       - name: Create Ansible inventory
-        run: echo $SRVNAME && echo $SRVNAME > ./hosts
+        run: echo ${{ vars.SRVNAME }}
       - name: Check inventory
         run: ansible-inventory --graph 
       - name: Run Ansible ping
-        run: ansible all -m ping --extra-vars "host_key_checking=False ansible_user=${{ secrets.SRVLOGIN }} ansible_password=${{ secrets.SRVPASS }}" 
+        run: ansible all -m ping --extra-vars "ansible_user=${{ secrets.SRVLOGIN }} ansible_password=${{ secrets.SRVPASS }}" 
 
