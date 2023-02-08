@@ -10,7 +10,7 @@ jobs:
     runs-on: [ubuntu-latest]
     steps:
       # Чекаутим код
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v4
       # Устанавливаем python нужной версии
       - uses: actions/setup-python@v4.5.0
         with:
@@ -30,3 +30,22 @@ jobs:
       - name: Run Ansible ping
         run: ansible all -m ping --extra-vars "ansible_user=${{ secrets.SRVLOGIN }} ansible_password=${{ secrets.SRVPASS }}" 
 
+
+
+  build_and_pub:
+    # Если тесты были пройдены успешно
+    needs: [run_tests]
+    runs-on: [ubuntu-latest]
+
+    steps:
+      - name: Login to docker.io
+        # Сначала мы логинимся в docker.io
+        run:  echo ${{ secrets.DOCKER_PWD }} | docker login -u ${{ secrets.DH_LOGIN }} --password-stdin
+        # Чекаутим код
+      - uses: actions/checkout@v4
+      - name: Build image
+        # Собираем image и называем его так как указано в hub.docker т.е. login/repository:version
+        run: docker build -t ${{ secrets.DH_LOGIN }}/${{ vars.DH_REPO }}:${GITHUB_REF:11} -f Dockerfile .
+      - name: Push image to docker.io
+        # Пушим образ в registry
+        run: docker push ${{ secrets.DH_LOGIN }}/${{ vars.DH_REPO }}:${GITHUB_REF:11}
